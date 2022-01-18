@@ -6,10 +6,10 @@ import { DiagnosticSeverity } from '@stoplight/types';
 import { Ruleset } from '../ruleset';
 import { RulesetDefinition } from '../types';
 import { print } from './__helpers__/print';
-import { RulesetValidationError } from '../validation';
+import { RulesetValidationError } from '../validation/index';
 import { isPlainObject } from '@stoplight/json';
 import { Format } from '../format';
-import { JSONSchema4, JSONSchema6, JSONSchema7 } from 'json-schema';
+import type { JSONSchema4, JSONSchema6, JSONSchema7 } from 'json-schema';
 import { FormatsSet } from '../utils/formatsSet';
 
 async function loadRuleset(mod: Promise<{ default: RulesetDefinition }>, source?: string): Promise<Ruleset> {
@@ -247,7 +247,7 @@ describe('Ruleset', () => {
   describe('error handling', () => {
     it('given empty ruleset, should throw a user friendly error', () => {
       expect(() => new Ruleset({})).toThrowError(
-        new RulesetValidationError('Ruleset must have rules or extends or overrides defined'),
+        new RulesetValidationError('Ruleset must have rules or extends or overrides defined', []),
       );
     });
   });

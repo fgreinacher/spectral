@@ -1935,7 +1935,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stoplight/json@npm:3.17.0, @stoplight/json@npm:^3.17.0, @stoplight/json@npm:~3.17.0, @stoplight/json@npm:~3.17.1":
+"@stoplight/json@npm:3.17.0, @stoplight/json@npm:^3.15.0, @stoplight/json@npm:^3.17.0, @stoplight/json@npm:~3.17.1":
   version: 3.17.0
   resolution: "@stoplight/json@npm:3.17.0"
   dependencies:
@@ -1945,6 +1945,19 @@ __metadata:
     lodash: ^4.17.21
     safe-stable-stringify: ^1.1
   checksum: 452bb6963d35196420d1214320223c38d3c7858a0420ad222d347c6bcaf69a5897add288ae7305f6cf46ff1f078c037f4c9deb42911f8f0907bcfbd97dcfbd62
+  languageName: node
+  linkType: hard
+
+"@stoplight/json@npm:~3.17.0":
+  version: 3.17.1
+  resolution: "@stoplight/json@npm:3.17.1"
+  dependencies:
+    "@stoplight/ordered-object-literal": ^1.0.2
+    "@stoplight/types": ^12.3.0
+    jsonc-parser: ~2.2.1
+    lodash: ^4.17.21
+    safe-stable-stringify: ^1.1
+  checksum: 4a9ce5812c8ec6415de06608c99c718ecffc5a8db8488fedbc50eae47b0b287dd1f54d06576f7c4b958f3fdc847c7aad671ae918db0c00db868c2cba7781eebd
   languageName: node
   linkType: hard
 
@@ -2023,8 +2036,9 @@ __metadata:
     "@stoplight/spectral-parsers": "*"
     "@stoplight/spectral-ref-resolver": ^1.0.0
     "@stoplight/spectral-runtime": ^1.0.0
-    "@stoplight/types": 12.3.0
+    "@stoplight/types": 12.5.0
     "@stoplight/yaml": ^4.2.2
+    "@types/es-aggregate-error": ^1.0.2
     "@types/json-schema": ^7.0.7
     "@types/minimatch": ^3.0.5
     "@types/treeify": ^1.0.0
@@ -2032,7 +2046,7 @@ __metadata:
     ajv-errors: ~3.0.0
     ajv-formats: ~2.1.0
     blueimp-md5: 2.18.0
-    json-schema: 0.4.0
+    es-aggregate-error: ^1.0.7
     jsonpath-plus: 6.0.1
     lodash: ~4.17.21
     lodash.topath: ^4.5.2
@@ -2175,9 +2189,22 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@stoplight/spectral-runtime@^1.0.0, @stoplight/spectral-runtime@^1.1.0, @stoplight/spectral-runtime@^1.1.1, @stoplight/spectral-runtime@workspace:packages/runtime":
+"@stoplight/spectral-runtime@^1.0.0, @stoplight/spectral-runtime@^1.1.0, @stoplight/spectral-runtime@workspace:packages/runtime":
   version: 0.0.0-use.local
   resolution: "@stoplight/spectral-runtime@workspace:packages/runtime"
+  dependencies:
+    "@stoplight/json": ^3.15.0
+    "@stoplight/path": ^1.3.2
+    "@stoplight/types": ^12.3.0
+    abort-controller: ^3.0.0
+    lodash: ^4.17.21
+    node-fetch: ^2.6.1
+  languageName: unknown
+  linkType: soft
+
+"@stoplight/spectral-runtime@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@stoplight/spectral-runtime@npm:1.1.1"
   dependencies:
     "@stoplight/json": ^3.17.0
     "@stoplight/path": ^1.3.2
@@ -2186,8 +2213,9 @@ __metadata:
     lodash: ^4.17.21
     node-fetch: ^2.6.1
     tslib: ^2.3.1
-  languageName: unknown
-  linkType: soft
+  checksum: 6078e6a610b26a906c0348a8a5f903ca9f61d0fd52f8ea342d48ef35459147d63d612593efe2fcc31b64fe79eaac15fe2a609c5a3d5404c23bbb3c4f7590c4fb
+  languageName: node
+  linkType: hard
 
 "@stoplight/types@npm:12.3.0, @stoplight/types@npm:^12.0.0, @stoplight/types@npm:^12.3.0":
   version: 12.3.0
@@ -2196,6 +2224,16 @@ __metadata:
     "@types/json-schema": ^7.0.4
     utility-types: ^3.10.0
   checksum: 28065540d2d30743bfaa4ab09df3dc1e2a216f14962f78e27d8e53eda7f293f64eba8703be53b8d179dff403f54764e0823baa578fa85f78280d21b0ae22e773
+  languageName: node
+  linkType: hard
+
+"@stoplight/types@npm:12.5.0":
+  version: 12.5.0
+  resolution: "@stoplight/types@npm:12.5.0"
+  dependencies:
+    "@types/json-schema": ^7.0.4
+    utility-types: ^3.10.0
+  checksum: fe4a09df6e1c2f0cdb53f474b180cc7b8184e814e1ac4427d199642f10958335f597060530a908c0e5800ba2569d077afe124a51deaee466255ce942e1e03941
   languageName: node
   linkType: hard
 
@@ -2312,6 +2350,15 @@ __metadata:
   version: 2.8.10
   resolution: "@types/cors@npm:2.8.10"
   checksum: f87e2f7bb6b4e3a143713a8e6def1791c47e8b3d344d30b6a190cae729de2f50df656c51fc92d5bdf7c5536cb32624f73bab244f6396a35aae0119e7c7bbad73
+  languageName: node
+  linkType: hard
+
+"@types/es-aggregate-error@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@types/es-aggregate-error@npm:1.0.2"
+  dependencies:
+    "@types/node": "*"
+  checksum: 076fd59b595f33c8c7e7eb68ec55bd43cf8b2cf7bbc6778e25d7ae1a5fa0538a0a56f149015f403d7bbcefe59f1d8182351685b59c1fe719fd46d0dd8a9737fa
   languageName: node
   linkType: hard
 
@@ -2835,14 +2882,14 @@ __metadata:
   linkType: hard
 
 "ajv@npm:^8.0.0, ajv@npm:^8.0.1, ajv@npm:^8.6.0, ajv@npm:^8.6.3, ajv@npm:^8.8.2":
-  version: 8.8.2
-  resolution: "ajv@npm:8.8.2"
+  version: 8.9.0
+  resolution: "ajv@npm:8.9.0"
   dependencies:
     fast-deep-equal: ^3.1.1
     json-schema-traverse: ^1.0.0
     require-from-string: ^2.0.2
     uri-js: ^4.2.2
-  checksum: 90849ef03c4f4f7051d15f655120137b89e3205537d683beebd39d95f40c0ca00ea8476cd999602d2f433863e7e4bf1b81d1869d1e07f4dcf56d71b6430a605c
+  checksum: 756c048bfa917b43bb84c8a0a53e6a489123203bc4bdec8cbeb8ec2d715674f5e61d49560a1a6ec83268af4f33bed324f5cb6d9c76d96849fd58ed7089b8e7f3
   languageName: node
   linkType: hard
 
@@ -3058,7 +3105,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"astring@npm:^1.7.5, astring@npm:^1.8.1":
+"astring@npm:^1.7.5":
+  version: 1.7.5
+  resolution: "astring@npm:1.7.5"
+  bin:
+    astring: bin/astring
+  checksum: b432c3f35473ccb7ae715c9e7f5f2ea3eb6864809396d5a0cd4a00959bced3d8aaddf3d87a86e5c0f2f00a210fe789c2835e9dc48ac7c6dfe8be483f655a9490
+  languageName: node
+  linkType: hard
+
+"astring@npm:^1.8.1":
   version: 1.8.1
   resolution: "astring@npm:1.8.1"
   bin:
@@ -4642,6 +4698,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"es-aggregate-error@npm:^1.0.7":
+  version: 1.0.7
+  resolution: "es-aggregate-error@npm:1.0.7"
+  dependencies:
+    define-properties: ^1.1.3
+    es-abstract: ^1.19.0
+    function-bind: ^1.1.1
+    functions-have-names: ^1.2.2
+    get-intrinsic: ^1.1.1
+    globalthis: ^1.0.2
+  checksum: 16b89fefdf56c0478cd21577249156cf83e44c2220c057cbfddd99c01e15e03d6d90a85ce73dece4728a5bfcb022dc160e04a66b1f83a620f140842c6f8325f9
+  languageName: node
+  linkType: hard
+
 "es-to-primitive@npm:^1.2.1":
   version: 1.2.1
   resolution: "es-to-primitive@npm:1.2.1"
@@ -5457,6 +5527,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"functions-have-names@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "functions-have-names@npm:1.2.2"
+  checksum: 25f44b6d1c41ac86ffdf41f25d1de81c0a5b4a3fcf4307a33cdfb23b9d4bd5d0d8bf312eaef5ad368c6500c8a9e19f692b8ce9f96aaab99db9dd936554165558
+  languageName: node
+  linkType: hard
+
 "gauge@npm:~2.7.3":
   version: 2.7.4
   resolution: "gauge@npm:2.7.4"
@@ -5628,6 +5705,15 @@ __metadata:
   dependencies:
     type-fest: ^0.20.2
   checksum: 566b29b475dd793eeb44d5b54823fdbf320e7077f5d1d330856ac2e7e016e4b50c8310b12d498282d5b5b26bdd7a1a6343615f510bf37b8863ec2741d58cc6ad
+  languageName: node
+  linkType: hard
+
+"globalthis@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "globalthis@npm:1.0.2"
+  dependencies:
+    define-properties: ^1.1.3
+  checksum: 5a5f3c7ab94708260a98106b35946b74bb57f6b2013e39668dc9e8770b80a3418103b63a2b4aa01c31af15fdf6a2940398ffc0a408573c34c2304f928895adff
   languageName: node
   linkType: hard
 
@@ -7009,7 +7095,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsep@npm:^1.1.2, jsep@npm:^1.2.0":
+"jsep@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "jsep@npm:1.1.2"
+  checksum: 189f29e522eec611793fcc81e8dbf919ecc1e9dd7858b9e34e32461280ae35e89a14ada91f8715b38650717b1571ab4480a46f53d60513079882ccc103f5b9c1
+  languageName: node
+  linkType: hard
+
+"jsep@npm:^1.2.0":
   version: 1.2.0
   resolution: "jsep@npm:1.2.0"
   checksum: 7166871e91f6be3409658b7417955a72bba4341b664e9cf062c9e0150e7f465aedc4d8fbb67e7967e3c224cbb41f155a0c16df489614421578cb96f1ba1c5519
@@ -7086,13 +7179,6 @@ __metadata:
   version: 1.0.0
   resolution: "json-schema-traverse@npm:1.0.0"
   checksum: 02f2f466cdb0362558b2f1fd5e15cce82ef55d60cd7f8fa828cf35ba74330f8d767fcae5c5c2adb7851fa811766c694b9405810879bc4e1ddd78a7c0e03658ad
-  languageName: node
-  linkType: hard
-
-"json-schema@npm:0.4.0, json-schema@npm:^0.4.0":
-  version: 0.4.0
-  resolution: "json-schema@npm:0.4.0"
-  checksum: 66389434c3469e698da0df2e7ac5a3281bcff75e797a5c127db7c5b56270e01ae13d9afa3c03344f76e32e81678337a8c912bdbb75101c62e487dc3778461d72
   languageName: node
   linkType: hard
 
@@ -9291,7 +9377,6 @@ __metadata:
     jest: ^27.4.3
     jest-mock: ^27.4.2
     jest-when: ^3.4.2
-    json-schema: ^0.4.0
     karma: ^6.1.1
     karma-chrome-launcher: ^3.1.0
     karma-jasmine: ^3.3.1

@@ -1,3 +1,5 @@
+import '@stoplight/spectral-test-utils/matchers';
+
 import { join, resolve } from '@stoplight/path';
 import nock from 'nock';
 import * as yargs from 'yargs';
@@ -5,6 +7,8 @@ import lintCommand from '../../commands/lint';
 import { lint } from '../linter';
 import { DiagnosticSeverity } from '@stoplight/types';
 import { RulesetValidationError } from '@stoplight/spectral-core';
+import '@stoplight/spectral-test-utils/matchers';
+import AggregateError = require('es-aggregate-error');
 
 jest.mock('../output');
 
@@ -204,8 +208,32 @@ describe('Linter service', () => {
       });
 
       it('fails trying to extend an invalid relative ruleset', () => {
-        return expect(run(`lint ${validCustomOas3SpecPath} -r ${invalidNestedRulesetPath}`)).rejects.toThrowError(
-          RulesetValidationError,
+        return expect(
+          run(`lint ${validCustomOas3SpecPath} -r ${invalidNestedRulesetPath}`),
+        ).rejects.toThrowAggregateError(
+          new AggregateError([
+            new RulesetValidationError('must be equal to one of the allowed values', [
+              'rules',
+              'rule-with-invalid-enum',
+            ]),
+            new RulesetValidationError('the rule must have at least "given" and "then" properties', [
+              'rules',
+              'rule-without-given-nor-them',
+            ]),
+            new RulesetValidationError('allowed types are "style" and "validation"', [
+              'rules',
+              'rule-with-invalid-enum',
+              'type',
+            ]),
+            new RulesetValidationError('must be equal to one of the allowed values', [
+              'rules',
+              'rule-without-given-nor-them',
+            ]),
+            new RulesetValidationError(
+              'the value has to be one of: 0, 1, 2, 3 or "error", "warn", "info", "hint", "off"',
+              ['rules', 'rule-with-invalid-enum', 'severity'],
+            ),
+          ]),
         );
       });
     });
@@ -218,8 +246,30 @@ describe('Linter service', () => {
       });
 
       it('outputs "invalid ruleset" error', () => {
-        return expect(run(`lint ${validOas3SpecPath} -r ${invalidRulesetPath}`)).rejects.toThrowError(
-          RulesetValidationError,
+        return expect(run(`lint ${validOas3SpecPath} -r ${invalidRulesetPath}`)).rejects.toThrowAggregateError(
+          new AggregateError([
+            new RulesetValidationError('must be equal to one of the allowed values', [
+              'rules',
+              'rule-with-invalid-enum',
+            ]),
+            new RulesetValidationError('the rule must have at least "given" and "then" properties', [
+              'rules',
+              'rule-without-given-nor-them',
+            ]),
+            new RulesetValidationError('allowed types are "style" and "validation"', [
+              'rules',
+              'rule-with-invalid-enum',
+              'type',
+            ]),
+            new RulesetValidationError('must be equal to one of the allowed values', [
+              'rules',
+              'rule-without-given-nor-them',
+            ]),
+            new RulesetValidationError(
+              'the value has to be one of: 0, 1, 2, 3 or "error", "warn", "info", "hint", "off"',
+              ['rules', 'rule-with-invalid-enum', 'severity'],
+            ),
+          ]),
         );
       });
 

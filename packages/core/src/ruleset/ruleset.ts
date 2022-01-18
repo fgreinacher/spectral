@@ -8,7 +8,7 @@ import {
   RulesetDefinition,
   RulesetOverridesDefinition,
 } from './types';
-import { assertValidRuleset } from './validation';
+import { assertValidRuleset } from './validation/index';
 import { mergeRule } from './mergers/rules';
 import { DEFAULT_PARSER_OPTIONS, getDiagnosticSeverity } from '..';
 import { mergeRulesets } from './mergers/rulesets';
@@ -41,15 +41,13 @@ export type StringifiedRuleset = {
 
 export class Ruleset {
   public readonly id = SEED++;
-
-  protected readonly extends: Ruleset[] | null;
   public readonly formats = new FormatsSet();
   public readonly overrides: RulesetOverridesDefinition | null;
   public readonly aliases: RulesetAliasesDefinition | null;
   public readonly hasComplexAliases: boolean;
   public readonly rules: Record<string, Rule>;
   public readonly definition: RulesetDefinition;
-
+  protected readonly extends: Ruleset[] | null;
   readonly #context: RulesetContext & { severity: FileRulesetSeverityDefinition };
 
   constructor(readonly maybeDefinition: unknown, context?: RulesetContext) {
@@ -153,6 +151,14 @@ export class Ruleset {
 
   get source(): string | null {
     return this.#context.source ?? null;
+  }
+
+  public get parserOptions(): ParserOptions {
+    return { ...DEFAULT_PARSER_OPTIONS, ...this.definition.parserOptions };
+  }
+
+  public static isDefaultRulesetFile(uri: string): boolean {
+    return DEFAULT_RULESET_FILE.test(uri);
   }
 
   public fromSource(source: string | null): Ruleset {
@@ -259,6 +265,22 @@ export class Ruleset {
     return ruleset;
   }
 
+  public toJSON(): Omit<StringifiedRuleset, 'extends' | 'rules'> & {
+    extends: Ruleset['extends'];
+    rules: Ruleset['rules'];
+  } {
+    return {
+      id: this.id,
+      extends: this.extends,
+      source: this.source,
+      aliases: this.aliases,
+      formats: this.formats.size === 0 ? null : this.formats,
+      rules: this.rules,
+      overrides: this.overrides,
+      parserOptions: this.parserOptions,
+    };
+  }
+
   #getRules(): Record<string, Rule> {
     const rules: Record<string, Rule> = {};
 
@@ -299,29 +321,5 @@ export class Ruleset {
     }
 
     return rules;
-  }
-
-  public get parserOptions(): ParserOptions {
-    return { ...DEFAULT_PARSER_OPTIONS, ...this.definition.parserOptions };
-  }
-
-  public static isDefaultRulesetFile(uri: string): boolean {
-    return DEFAULT_RULESET_FILE.test(uri);
-  }
-
-  public toJSON(): Omit<StringifiedRuleset, 'extends' | 'rules'> & {
-    extends: Ruleset['extends'];
-    rules: Ruleset['rules'];
-  } {
-    return {
-      id: this.id,
-      extends: this.extends,
-      source: this.source,
-      aliases: this.aliases,
-      formats: this.formats.size === 0 ? null : this.formats,
-      rules: this.rules,
-      overrides: this.overrides,
-      parserOptions: this.parserOptions,
-    };
   }
 }

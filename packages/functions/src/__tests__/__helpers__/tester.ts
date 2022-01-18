@@ -6,7 +6,9 @@ import {
   IRuleResult,
   RulesetFunction,
   RulesetFunctionWithValidator,
+  RulesetValidationError,
 } from '@stoplight/spectral-core';
+import { isAggregateError } from '@stoplight/spectral-core/src/guards/isAggregateError';
 
 export default async function <O = unknown>(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -16,40 +18,37 @@ export default async function <O = unknown>(
   rule?: Partial<Omit<RuleDefinition, 'then'>> & { then?: Partial<RuleDefinition['then']> },
 ): Promise<Pick<IRuleResult, 'path' | 'message'>[]> {
   const s = new Spectral();
-  s.setRuleset({
-    rules: {
-      'my-rule': {
-        given: '$',
-        ...rule,
-        then: {
-          ...(rule?.then as Ruleset['rules']['then']),
-          function: fn,
-          functionOptions: opts,
+  try {
+    s.setRuleset({
+      rules: {
+        'my-rule': {
+          given: '$',
+          ...rule,
+          then: {
+            ...(rule?.then as Ruleset['rules']['then']),
+            function: fn,
+            functionOptions: opts,
+          },
         },
       },
-    },
-  });
-
-  try {
-    const results = await s.run(input instanceof Document ? input : JSON.stringify(input));
-    return results
-      .filter(result => result.code === 'my-rule')
-      .map(error => ({
-        path: error.path,
-        message: error.message,
-      }));
-  } catch (e: unknown) {
-    if (
-      e instanceof Error &&
-      Array.isArray((e as Error & { errors?: unknown }).errors) &&
-      (e as Error & { errors: unknown[] }).errors.length === 1
-    ) {
-      const actualError = (e as Error & { errors: [unknown] }).errors[0];
-      throw actualError instanceof Error && 'cause' in (actualError as Error & { cause?: unknown })
-        ? (actualError as Error & { cause: unknown }).cause
-        : actualError;
-    } else {
-      throw e;
+    });
+  } catch (ex) {
+    if (isAggregateError(ex)) {
+      for (const e of ex.errors) {
+        if (e instanceof RulesetValidationError) {
+          e.path.length = 0;
+        }
+      }
     }
+
+    throw ex;
   }
+
+  const results = await s.run(input instanceof Document ? input : JSON.stringify(input));
+  return results
+    .filter(result => result.code === 'my-rule')
+    .map(error => ({
+      path: error.path,
+      message: error.message,
+    }));
 }
